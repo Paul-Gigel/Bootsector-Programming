@@ -1,10 +1,10 @@
 clear;
 $VBoxManage = "C:\Program Files\Oracle\VirtualBox\VBoxManage.exe";
-$ASMpath = "Helloworld.asm";
-$BINpath = "Helloworld.bin";
-$VDpath = "Helloworld.vdi";
-$VMFolderpath = pwd;
-$VMName = "Bootsector Programm"
+$ASMpath = "C:\Users\p.gigel\OneDrive - SFZ Förderzentrum gGmbH, Berufsbildungswerk\Desktop\Bootsector Programming\OS\MBR.asm";
+$BINpath = "C:\Users\p.gigel\OneDrive - SFZ Förderzentrum gGmbH, Berufsbildungswerk\Desktop\Bootsector Programming\OS\MBR.bin";
+$VDpath = "C:\Users\p.gigel\OneDrive - SFZ Förderzentrum gGmbH, Berufsbildungswerk\Desktop\Bootsector Programming\OS\MBR.vdi";
+$VMFolderpath = "C:\Users\p.gigel\OneDrive - SFZ Förderzentrum gGmbH, Berufsbildungswerk\Desktop\Bootsector Programming\OS";
+$VMName = "OS"
 
 
 if(Test-Path $VDpath -PathType Leaf) {
