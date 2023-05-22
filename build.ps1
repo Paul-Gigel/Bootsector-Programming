@@ -1,6 +1,7 @@
 clear;
 $VBoxManage = "C:\Program Files\Oracle\VirtualBox\VBoxManage.exe";
-$ASMpath = "C:\Users\p.gigel\OneDrive - SFZ Förderzentrum gGmbH, Berufsbildungswerk\Desktop\Bootsector Programming\OS\MBR.asm";
+$ASMpath = 'C:\Users\p.gigel\OneDrive - SFZ Förderzentrum gGmbH, Berufsbildungswerk\Desktop\Bootsector Programming\OS';
+$ASMname = 'MBR.asm';
 $BINpath = "C:\Users\p.gigel\OneDrive - SFZ Förderzentrum gGmbH, Berufsbildungswerk\Desktop\Bootsector Programming\OS\MBR.bin";
 $VDpath = "C:\Users\p.gigel\OneDrive - SFZ Förderzentrum gGmbH, Berufsbildungswerk\Desktop\Bootsector Programming\OS\MBR.vdi";
 $VMFolderpath = "C:\Users\p.gigel\OneDrive - SFZ Förderzentrum gGmbH, Berufsbildungswerk\Desktop\Bootsector Programming\OS";
@@ -15,9 +16,14 @@ if(Test-Path $BINpath -PathType Leaf) {
 }
 if(Test-Path (-join($VMFolderpath,"/", $VMName)) -PathType Any)	{
     &$VBoxManage unregistervm $VMName --delete
-	remove-item (-join($VMFolderpath,"/", $VMName));
-} 
-nasm -f bin $ASMpath -o $BINpath;
+	#remove-item (-join($VMFolderpath,"/", $VMName));
+}
+
+$currentPath = pwd;
+cd $ASMpath;
+    nasm -f bin $ASMname -o $BINpath;
+cd $currentPath;
+
 &$VBoxManage convertfromraw $BINpath $VDpath --format VDI;
 
 &$VBoxManage createvm --name $VMName --basefolder $VMFolderpath --register;

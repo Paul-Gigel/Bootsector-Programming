@@ -10,11 +10,13 @@ mov bp, 0x9000					; sets Basepointer to 0x9000 (far away from bootloader relate
 mov sp, bp						; Stack Pointer (TOS growth down wards)
 
 call load_kernel
-;call switch_to_32bit
+call switch_to_32bit
 
 jmp	$							; hang
 
-&include "Disk.asm"
+%include "Disk.asm"
+%include "Gdt.asm"
+%include "Switch_to_32bit.asm"
 
 [bits 16]
 load_kernel:
