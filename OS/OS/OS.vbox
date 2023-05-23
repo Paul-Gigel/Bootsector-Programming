@@ -6,10 +6,10 @@
 ** Use VBoxManage or the VirtualBox Manager GUI to make changes.
 -->
 <VirtualBox xmlns="http://www.virtualbox.org/" version="1.15-windows">
-  <Machine uuid="{a178e10e-d04f-461c-bb72-19993e373b52}" name="OS" OSType="Other" snapshotFolder="Snapshots" lastStateChange="2023-05-23T13:44:29Z">
+  <Machine uuid="{09046258-5a9d-4db8-afbf-bfe1d2047820}" name="OS" OSType="Other" snapshotFolder="Snapshots" lastStateChange="2023-05-23T14:01:15Z">
     <MediaRegistry>
       <HardDisks>
-        <HardDisk uuid="{895866a6-d0a5-4c9f-be8a-cf50ab1a67f3}" location="C:/Users/p.gigel/OneDrive - SFZ F&#xF6;rderzentrum gGmbH, Berufsbildungswerk/Desktop/Bootsector Programming/OS/MBR.vdi" format="VDI" type="Normal"/>
+        <HardDisk uuid="{7eca8059-2fce-4c3e-8160-0f3138e18ea5}" location="C:/Users/p.gigel/OneDrive - SFZ F&#xF6;rderzentrum gGmbH, Berufsbildungswerk/Desktop/Bootsector Programming/OS/MBR.vdi" format="VDI" type="Normal"/>
       </HardDisks>
     </MediaRegistry>
     <Hardware>
@@ -42,7 +42,7 @@
     <StorageControllers>
       <StorageController name="my Storageconstroller" type="PIIX4" PortCount="2" useHostIOCache="true" Bootable="true">
         <AttachedDevice type="HardDisk" hotpluggable="false" port="0" device="0">
-          <Image uuid="{895866a6-d0a5-4c9f-be8a-cf50ab1a67f3}"/>
+          <Image uuid="{7eca8059-2fce-4c3e-8160-0f3138e18ea5}"/>
         </AttachedDevice>
       </StorageController>
     </StorageControllers>
