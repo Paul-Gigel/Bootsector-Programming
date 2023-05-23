@@ -30,3 +30,4 @@ cd $currentPath;
 &$VBoxManage modifyvm $VMName --chipset piix3 --memory 1024;
 &$VBoxManage storagectl $VMName --name 'my Storageconstroller' --add ide --controller PIIX4
 &$VBoxManage storageattach $VMName --storagectl 'my Storageconstroller' --port 0 --device 0 --type hdd --medium $VDpath;
+clear

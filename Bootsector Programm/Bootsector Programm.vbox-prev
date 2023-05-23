@@ -14,7 +14,7 @@
     </MediaRegistry>
     <ExtraData>
       <ExtraDataItem name="GUI/LastCloseAction" value="PowerOff"/>
-      <ExtraDataItem name="GUI/LastNormalWindowPosition" value="640,244,720,451"/>
+      <ExtraDataItem name="GUI/LastNormalWindowPosition" value="580,-685,720,451"/>
     </ExtraData>
     <Hardware>
       <CPU>
@@ -43,7 +43,7 @@
       <AudioAdapter driver="DirectSound" enabled="true" enabledIn="false" enabledOut="false"/>
       <Clipboard/>
       <GuestProperties>
-        <GuestProperty name="/VirtualBox/HostInfo/GUI/LanguageID" value="de_DE" timestamp="1684658826077747800" flags=""/>
+        <GuestProperty name="/VirtualBox/HostInfo/GUI/LanguageID" value="de_DE" timestamp="1684757249504084800" flags=""/>
       </GuestProperties>
     </Hardware>
     <StorageControllers>
