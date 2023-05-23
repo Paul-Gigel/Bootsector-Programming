@@ -11,13 +11,15 @@ mov sp, bp						; Stack Pointer (TOS growth down wards)
 
 call load_kernel
 call switch_to_32bit
+	mov si, msg
+call DisplayString
 
 jmp	$							; hang
 
 %include "Disk.asm"
 %include "Gdt.asm"
 %include "Switch_to_32bit.asm"
-
+%include "DisplayString.asm"
 [bits 16]
 load_kernel:
 	mov bx, KERNEL_OFFSET		; location where to load the read Data into
@@ -32,6 +34,7 @@ BEGIN_32BIT:
 	jmp $						; loop in case Kernel returns
 
 BOOT_DRIVE db 0					; Bootdrive variable (not a constant)
+msg db 'Hello Worldddddddddddddd!',10,13,'luuul',10,13,0
 
 times 510-($-$$) db 0
 dw 0AA55h
