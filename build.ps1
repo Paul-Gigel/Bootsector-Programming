@@ -1,4 +1,10 @@
 clear;
+
+$vs = &"${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -prerelease -format json -latest | ConvertFrom-Json
+$installationPath = $vs.installationPath
+Import-Module "$installationPath\Common7\Tools\Microsoft.VisualStudio.DevShell.dll"
+Enter-VsDevShell $vs.instanceId -SkipAutomaticLocation
+
 $VBoxManage = "C:\Program Files\Oracle\VirtualBox\VBoxManage.exe";
 $ASMpath = 'C:\Users\p.gigel\OneDrive - SFZ Förderzentrum gGmbH, Berufsbildungswerk\Desktop\Bootsector Programming\OS';
 $ASMname = 'MBR.asm';
@@ -30,4 +36,6 @@ cd $currentPath;
 &$VBoxManage modifyvm $VMName --chipset piix3 --memory 1024;
 &$VBoxManage storagectl $VMName --name 'my Storageconstroller' --add ide --controller PIIX4
 &$VBoxManage storageattach $VMName --storagectl 'my Storageconstroller' --port 0 --device 0 --type hdd --medium $VDpath;
+
+Remove-Module Microsoft.VisualStudio.DevShell;
 clear

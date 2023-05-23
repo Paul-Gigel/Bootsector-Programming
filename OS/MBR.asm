@@ -9,10 +9,10 @@ mov [BOOT_DRIVE], dl			; store dl register in Variable called BOOT_DRIVE with va
 mov bp, 0x9000					; sets Basepointer to 0x9000 (far away from bootloader related code)
 mov sp, bp						; Stack Pointer (TOS growth down wards)
 
+mov si, msg
+call DisplayString
 call load_kernel
 call switch_to_32bit
-	mov si, msg
-call DisplayString
 
 jmp	$							; hang
 
