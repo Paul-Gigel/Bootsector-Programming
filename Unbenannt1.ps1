@@ -7,7 +7,7 @@ Enter-VsDevShell $vs.instanceId -SkipAutomaticLocation
 
 $KERNELcpath = 'C:\Users\p.gigel\OneDrive - SFZ Förderzentrum gGmbH, Berufsbildungswerk\Desktop\Bootsector Programming\OS\Kernel.c';
 $KERNELbinpath = 'C:\Users\p.gigel\OneDrive - SFZ Förderzentrum gGmbH, Berufsbildungswerk\Desktop\Bootsector Programming\OS\Kernel.bin';
-$KERNELobjpath = 'C:\Users\p.gigel\OneDrive - SFZ Förderzentrum gGmbH, Berufsbildungswerk\Desktop\Bootsector Programming\OS\Kernel.o';
+$KERNELobjpath = 'C:\Users\p.gigel\OneDrive - SFZ Förderzentrum gGmbH, Berufsbildungswerk\Desktop\Bootsector Programming\OS\Kernel.obj';
 
 $objcopy = "C:\Users\p.gigel\OneDrive - SFZ Förderzentrum gGmbH, Berufsbildungswerk\Desktop\gcc-13.1.0-no-debug\x86_64-w64-mingw32\bin\objcopy.exe";
 $objdump = "C:\Users\p.gigel\OneDrive - SFZ Förderzentrum gGmbH, Berufsbildungswerk\Desktop\gcc-13.1.0-no-debug\bin\objdump.exe"
@@ -17,4 +17,5 @@ $ld = "C:\Users\p.gigel\OneDrive - SFZ Förderzentrum gGmbH, Berufsbildungswerk\
 
 &$gcc -m32 -ffreestanding -C $KERNELcpath -o $KERNELobjpath
 echo "---------------------";
-&$ld -o $KERNELbinpath -b binary -Ttext 0x1000 $KERNELobjpath #--oformat binary
+&$ld -o $KERNELbinpath -m i386pe -Ttext 0x1000 $KERNELobjpath #--oformat binary
+#&$objcopy -I pe-i386 -O binary $KERNELobjpath $KERNELobjpath
