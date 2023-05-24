@@ -6,7 +6,7 @@
 ** Use VBoxManage or the VirtualBox Manager GUI to make changes.
 -->
 <VirtualBox xmlns="http://www.virtualbox.org/" version="1.15-windows">
-  <Machine uuid="{924ea067-8b4b-4374-8c39-6130422b189c}" name="OS" OSType="Other" snapshotFolder="Snapshots" lastStateChange="2023-05-23T17:18:22Z">
+  <Machine uuid="{ecbd6291-db34-4bcc-a099-fa70f2b01ad2}" name="OS" OSType="Other" snapshotFolder="Snapshots" lastStateChange="2023-05-24T08:04:43Z">
     <Hardware>
       <CPU>
         <PAE enabled="true"/>
