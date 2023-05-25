@@ -1,18 +1,12 @@
 clear;
 
-$vs = &"${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -prerelease -format json -latest | ConvertFrom-Json
-$installationPath = $vs.installationPath
-Import-Module "$installationPath\Common7\Tools\Microsoft.VisualStudio.DevShell.dll"
-Enter-VsDevShell $vs.instanceId -SkipAutomaticLocation
-
-$VBoxManage = "C:\Program Files\Oracle\VirtualBox\VBoxManage.exe";
-$ASMpath = 'C:\Users\p.gigel\OneDrive - SFZ Förderzentrum gGmbH, Berufsbildungswerk\Desktop\Bootsector Programming\OS';
+$VBoxManage = "/usr/bin/VBoxManage";
+$ASMpath = '/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/OS';
 $ASMname = 'MBR.asm';
-$BINpath = "C:\Users\p.gigel\OneDrive - SFZ Förderzentrum gGmbH, Berufsbildungswerk\Desktop\Bootsector Programming\OS\MBR.bin";
-$VDpath = "C:\Users\p.gigel\OneDrive - SFZ Förderzentrum gGmbH, Berufsbildungswerk\Desktop\Bootsector Programming\OS\MBR.vdi";
-$VMFolderpath = "C:\Users\p.gigel\OneDrive - SFZ Förderzentrum gGmbH, Berufsbildungswerk\Desktop\Bootsector Programming\OS";
+$BINpath = "/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/MBR.bin";
+$VDpath = "/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/OS/MBR.vdi";
+$VMFolderpath = "/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/OS";
 $VMName = "OS"
-
 
 if(Test-Path $VDpath -PathType Leaf) {
 	remove-item $VDpath;
@@ -37,5 +31,4 @@ cd $currentPath;
 &$VBoxManage storagectl $VMName --name 'my Storageconstroller' --add ide --controller PIIX4
 &$VBoxManage storageattach $VMName --storagectl 'my Storageconstroller' --port 0 --device 0 --type hdd --medium $VDpath;
 
-Remove-Module Microsoft.VisualStudio.DevShell;
-clear
+#clear
