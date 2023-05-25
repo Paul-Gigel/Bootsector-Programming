@@ -11,8 +11,8 @@ mov sp, bp						; Stack Pointer (TOS growth down wards)
 
 mov si, msg
 call load_kernel
-call switch_to_32bit
 call DisplayString
+call switch_to_32bit
 
 jmp	$							; hang
 
