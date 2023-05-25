@@ -10,9 +10,9 @@ mov bp, 0x9000					; sets Basepointer to 0x9000 (far away from bootloader relate
 mov sp, bp						; Stack Pointer (TOS growth down wards)
 
 mov si, msg
+call load_kernel
+call switch_to_32bit
 call DisplayString
-;call load_kernel
-;call switch_to_32bit
 
 jmp	$							; hang
 

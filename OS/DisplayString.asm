@@ -1,3 +1,4 @@
+[bits 16]
 DisplayString:							; string needs to be placed in si register
 	pusha
 	xor bx, bx
