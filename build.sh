@@ -11,6 +11,14 @@ VDpath="/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/
 VMFolderpath="/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/OS"
 VMName="OS"
 
+#VBoxManage="/usr/bin/VBoxManage"
+#ASMpath="/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming"
+#ASMname="Helloworld.asm"
+#BINpath="/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/Helloworld.bin"
+#VDpath="/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/Helloworld.vdi"
+#VMFolderpath="/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming"
+#VMName="Helloworld"
+
 # Remove the VDI and BIN files if they exist
 if [ -f "$VDpath" ]; then
     rm "$VDpath"
