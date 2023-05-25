@@ -41,6 +41,9 @@ cd "$ASMpath"
 nasm -f bin "$ASMname" -o "$BINpath"
 cd "$currentPath"
 
+gcc --no-pie -m32 -ffreestanding -c "$KERNELcpath" -o "$KERNELobjpath"
+ld -m elf_i386 -o "$KERNELbinpath" -Ttext 0x1000 "$KERNELobjpath" --oformat binary
+#cat "$KERNELbinpath" "$BINpath" > "$BINpath"
 
 "$VBoxManage" convertfromraw "$BINpath" "$VDpath" --format VDI
 
@@ -50,6 +53,4 @@ cd "$currentPath"
 "$VBoxManage" storagectl "$VMName" --name 'my Storageconstroller' --add ide --controller PIIX4
 "$VBoxManage" storageattach "$VMName" --storagectl 'my Storageconstroller' --port 0 --device 0 --type hdd --medium "$VDpath"
 
-gcc --no-pie -m32 -ffreestanding -c "$KERNELcpath" -o "$KERNELobjpath"
-ld -m elf_i386 -o "$KERNELbinpath" -Ttext 0x1000 "$KERNELobjpath" --oformat binary
 # clear
