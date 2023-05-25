@@ -11,10 +11,10 @@ switch_to_32bit:
 init_32bit:
 	mov ax, DATA_SEG				; update Segment registers
 	mov ds, ax
-    mov ss, ax
-    mov es, ax
-    mov fs, ax
-    mov gs, ax
+	mov ss, ax
+	mov es, ax
+	mov fs, ax
+	mov gs, ax
 
 	mov ebp, 0x90000				; setup stack
 	mov esp, ebp

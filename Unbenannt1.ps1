@@ -18,5 +18,5 @@ $ld = "C:\Users\p.gigel\OneDrive - SFZ Förderzentrum gGmbH, Berufsbildungswerk\
 &$gcc -m32 -ffreestanding -C $KERNELcpath -o $KERNELobjpath
 echo "---------------------";
 &$objcopy -I pe-i386 -O elf32-i386 $KERNELobjpath $KERNELobjpath;
-&$ld -o $KERNELbinpath -m i386pe -b elf32-i386 -Ttext 0x1000 $KERNELobjpath #--oformat binary
+&$ld -o $KERNELbinpath -b elf32-i386 -Ttext 0x1000 $KERNELobjpath --oformat binary
 &$objcopy -I pe-i386 -O binary $KERNELobjpath $KERNELobjpath

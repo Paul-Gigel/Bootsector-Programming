@@ -6,7 +6,7 @@
 ** Use VBoxManage or the VirtualBox Manager GUI to make changes.
 -->
 <VirtualBox xmlns="http://www.virtualbox.org/" version="1.15-windows">
-  <Machine uuid="{86ad10b1-7157-428c-92ed-359d8975bd1d}" name="Bootsector Programm" OSType="Other" snapshotFolder="Snapshots" lastStateChange="2023-05-22T12:07:28Z">
+  <Machine uuid="{86ad10b1-7157-428c-92ed-359d8975bd1d}" name="Bootsector Programm" OSType="Other" snapshotFolder="Snapshots" lastStateChange="2023-05-25T16:18:30Z">
     <MediaRegistry>
       <HardDisks>
         <HardDisk uuid="{480a88f1-150f-42d5-b9bc-9892ae5b6c4d}" location="C:/Users/p.gigel/OneDrive - SFZ F&#xF6;rderzentrum gGmbH, Berufsbildungswerk/Desktop/Bootsector Programming/Helloworld.vdi" format="VDI" type="Normal"/>

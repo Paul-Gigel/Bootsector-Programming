@@ -1,3 +1,4 @@
+[bits 16]								; not placing this line causes instruction below to be 32 bit
 DisplayString:							; string needs to be placed in si register
 	pusha
 	xor bx, bx

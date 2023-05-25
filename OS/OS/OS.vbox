@@ -6,12 +6,16 @@
 ** Use VBoxManage or the VirtualBox Manager GUI to make changes.
 -->
 <VirtualBox xmlns="http://www.virtualbox.org/" version="1.15-windows">
-  <Machine uuid="{ecbd6291-db34-4bcc-a099-fa70f2b01ad2}" name="OS" OSType="Other" snapshotFolder="Snapshots" lastStateChange="2023-05-24T08:04:43Z">
+  <Machine uuid="{1c64e842-6234-4aa5-86e1-a480226f2bfc}" name="OS" OSType="Other" snapshotFolder="Snapshots" lastStateChange="2023-05-25T17:56:53Z">
     <MediaRegistry>
       <HardDisks>
-        <HardDisk uuid="{7d766639-7856-45d3-835d-80a448156b42}" location="C:/Users/p.gigel/OneDrive - SFZ F&#xF6;rderzentrum gGmbH, Berufsbildungswerk/Desktop/Bootsector Programming/OS/MBR.vdi" format="VDI" type="Normal"/>
+        <HardDisk uuid="{9c5adbef-1160-4c6f-8b5f-1c8208a51b24}" location="C:/Users/p.gigel/OneDrive - SFZ F&#xF6;rderzentrum gGmbH, Berufsbildungswerk/Desktop/Bootsector Programming/OS/MBR.vdi" format="VDI" type="Normal"/>
       </HardDisks>
     </MediaRegistry>
+    <ExtraData>
+      <ExtraDataItem name="GUI/LastCloseAction" value="PowerOff"/>
+      <ExtraDataItem name="GUI/LastNormalWindowPosition" value="640,244,720,451"/>
+    </ExtraData>
     <Hardware>
       <CPU>
         <PAE enabled="true"/>
@@ -38,11 +42,14 @@
       </Network>
       <AudioAdapter driver="DirectSound" enabled="true" enabledIn="false" enabledOut="false"/>
       <Clipboard/>
+      <GuestProperties>
+        <GuestProperty name="/VirtualBox/HostInfo/GUI/LanguageID" value="de_DE" timestamp="1685037413664807800" flags=""/>
+      </GuestProperties>
     </Hardware>
     <StorageControllers>
       <StorageController name="my Storageconstroller" type="PIIX4" PortCount="2" useHostIOCache="true" Bootable="true">
         <AttachedDevice type="HardDisk" hotpluggable="false" port="0" device="0">
-          <Image uuid="{7d766639-7856-45d3-835d-80a448156b42}"/>
+          <Image uuid="{9c5adbef-1160-4c6f-8b5f-1c8208a51b24}"/>
         </AttachedDevice>
       </StorageController>
     </StorageControllers>

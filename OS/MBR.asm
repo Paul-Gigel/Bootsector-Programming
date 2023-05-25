@@ -18,7 +18,9 @@ jmp	$							; hang
 
 %include "Disk.asm"
 %include "Gdt.asm"
-%include "Switch_to_32bit.asm"
+%include "Switch_to_32bit.asm"	; DisplayString does not work when inluding that thing 
+								; wothout even calling it
+								; does not seem to overwrite 512 border (tested)
 %include "DisplayString.asm"
 [bits 16]
 load_kernel:
@@ -30,12 +32,12 @@ load_kernel:
 
 [bits 32]
 BEGIN_32BIT:
-	call KERNEL_OFFSET			; give Control to the Kernel
+;	call KERNEL_OFFSET			; give Control to the Kernel
 	jmp $						; loop in case Kernel returns
 
 BOOT_DRIVE db 0					; Bootdrive variable (not a constant)
 msg db 'Hello Worldddddddddddddd!',10,13,'luuul',10,13,0
-
+;
 times 510-($-$$) db 0
 dw 0AA55h
 times 2048000-($-$$) db 0
