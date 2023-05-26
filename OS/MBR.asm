@@ -30,7 +30,7 @@ load_kernel:
 
 [bits 32]
 BEGIN_32BIT:
-;	call KERNEL_OFFSET			; give Control to the Kernel
+	call KERNEL_OFFSET			; give Control to the Kernel
 	jmp $						; loop in case Kernel returns
 
 BOOT_DRIVE db 0					; Bootdrive variable (not a constant)
@@ -38,4 +38,4 @@ msg db 'Hello Worldddddddddddddd!',10,13,'luuul',10,13,0
 
 times 510-($-$$) db 0
 dw 0AA55h
-times 2048000-($-$$) db 0
+;times 2048000-($-$$) db 0

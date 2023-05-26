@@ -43,14 +43,22 @@ cd "$currentPath"
 
 gcc --no-pie -m32 -ffreestanding -c "$KERNELcpath" -o "$KERNELobjpath"
 ld -m elf_i386 -o "$KERNELbinpath" -Ttext 0x1000 "$KERNELobjpath" --oformat binary
+#combine asm with c
 dd if="$KERNELbinpath" of="$BINpath" conv=notrunc oflag=append bs=512 seek=1
+
 FILESIZE=$(stat -c%s "$BINpath")
 FILEpadding=$((512-(FILESIZE % 512)))
 echo "$FILESIZE"
 echo "$FILEpadding"
+#align to 512 bit boundery
 dd if=/dev/zero of="$BINpath" bs=1 seek="$FILESIZE" count="$FILEpadding" #conv=notrunc oflag=append
 FILESIZE=$(stat -c%s "$BINpath")
 echo "$FILESIZE"
+
+#make one 1mb
+FILEpadding=$((1048576-(FILESIZE)))
+dd if=/dev/zero of="$BINpath" bs=1 seek="$FILESIZE" count="$FILEpadding"
+
 "$VBoxManage" convertfromraw "$BINpath" "$VDpath" --format VDI
 
 
