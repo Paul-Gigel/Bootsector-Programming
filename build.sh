@@ -11,8 +11,10 @@ VDpath="/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/
 VMFolderpath="/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/OS"
 VMName="OS"
 KERNELcpath='/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/OS/Kernel.c'
-KERNELbinpath='/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/OS/Kernel.bin'
+Kernelentry_asm_path='/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/OS/Kernelentry.asm'
+Kernelentry_obj_path='/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/OS/Kernelentry.o'
 KERNELobjpath='/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/OS/Kernel.o'
+KERNELbinpath='/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/OS/Kernel.bin'
 
 #VBoxManage="/usr/bin/VBoxManage"
 #ASMpath="/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming"
@@ -29,7 +31,6 @@ fi
 if [ -f "$BINpath" ]; then
     rm "$BINpath"
 fi
-
 # Remove the VM if it exists
 if [ -d "$VMFolderpath/$VMName" ]; then
     "$VBoxManage" unregistervm "$VMName" --delete
@@ -39,29 +40,24 @@ fi
 currentPath=$(pwd)
 cd "$ASMpath"
 nasm -f bin "$ASMname" -o "$BINpath"
+nasm -f elf "$Kernelentry_asm_path" -o "$Kernelentry_obj_path"
 cd "$currentPath"
 
 gcc --no-pie -m32 -ffreestanding -c "$KERNELcpath" -o "$KERNELobjpath"
-ld -m elf_i386 -o "$KERNELbinpath" -Ttext 0x1000 "$KERNELobjpath" --oformat binary
+ld -m elf_i386 -o "$KERNELbinpath" -Ttext 0x1000 "$Kernelentry_obj_path" "$KERNELobjpath" --oformat binary
 #combine asm with c
+#skip(seek)1 * bytes(bs)512  -----> skip bootsector
 dd if="$KERNELbinpath" of="$BINpath" conv=notrunc oflag=append bs=512 seek=1
-
+#align to 512 bit boundery
 FILESIZE=$(stat -c%s "$BINpath")
 FILEpadding=$((512-(FILESIZE % 512)))
-echo "$FILESIZE"
-echo "$FILEpadding"
-#align to 512 bit boundery
-dd if=/dev/zero of="$BINpath" bs=1 seek="$FILESIZE" count="$FILEpadding" #conv=notrunc oflag=append
+dd if=/dev/zero of="$BINpath" bs=1 seek="$FILESIZE" count="$FILEpadding"
+#make one 1mib
 FILESIZE=$(stat -c%s "$BINpath")
-echo "$FILESIZE"
-
-#make one 1mb
 FILEpadding=$((1048576-(FILESIZE)))
 dd if=/dev/zero of="$BINpath" bs=1 seek="$FILESIZE" count="$FILEpadding"
 
 "$VBoxManage" convertfromraw "$BINpath" "$VDpath" --format VDI
-
-
 "$VBoxManage" createvm --name "$VMName" --basefolder "$VMFolderpath" --register
 "$VBoxManage" modifyvm "$VMName" --chipset piix3 --memory 1024
 "$VBoxManage" storagectl "$VMName" --name 'my Storageconstroller' --add ide --controller PIIX4

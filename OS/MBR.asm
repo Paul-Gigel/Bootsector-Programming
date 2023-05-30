@@ -38,4 +38,3 @@ msg db 'Hello Worldddddddddddddd!',10,13,'luuul',10,13,0
 
 times 510-($-$$) db 0
 dw 0AA55h
-;times 2048000-($-$$) db 0

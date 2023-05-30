@@ -1,12 +1,15 @@
+//shit, I need to learn C syntax
 struct Video_Mem    {
     char* code;
     char* color;
 };
 void main() {
-    struct Video_Mem videoMem = {(char*)0xb8000, (char*)0xb8001};
-    *(Video_Mem.code) = 'Z';
-	char* video_memory1 = (char*)0xb8002;
-	*video_memory1 = 'A';
-    char* video_memory2 = (char*)0xb8004;
-    *video_memory2 = 'B';
+    unsigned int i = 0;
+    unsigned int foo = 0x0;
+    struct Video_Mem videoMem[i];   //if I directly put value of i it gets very buggy
+    for (unsigned int counter = 0; counter < i; counter++)   {
+        videoMem[counter].code = (char*)(0xb8000 + foo);
+        *videoMem[counter].code = 'X';
+        foo += 2;
+    }
 }
