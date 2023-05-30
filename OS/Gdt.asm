@@ -1,4 +1,4 @@
-gdt_start:								; null Sergment descriptor
+gdt_start:								; null Segment descriptor
 	dq 0x0
 
 gdt_code:								; code Segment descriptor

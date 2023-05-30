@@ -1,3 +1,4 @@
+global BOOT_DRIVE
 [bits 16]						; tells the compiler to generate 16 bit assambly
 [org 0x7c00]					; tells the compiler to calculate labels from [org ...]
 								; Where to load the Kernel to
