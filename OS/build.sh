@@ -43,6 +43,7 @@ nasm -f bin "$ASMname" -o "$BINpath"
 nasm -f elf "$Kernelentry_asm_path" -o "$Kernelentry_obj_path"
 cd "$currentPath"
 
+
 gcc --no-pie -m32 -ffreestanding -c "$KERNELcpath" -o "$KERNELobjpath"
 ld -m elf_i386 -o "$KERNELbinpath" -Ttext 0x1000 "$Kernelentry_obj_path" "$KERNELobjpath" --oformat binary
 #combine asm with c
