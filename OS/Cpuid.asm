@@ -1,6 +1,8 @@
 [global Cpuid_check]
 [bits 32]
 Cpuid_check:
+    push ebp
+    mov ebp, esp
     pushfd
     pop eax
     mov ecx, eax
@@ -10,4 +12,5 @@ Cpuid_check:
     push ecx
     popfd
     xor eax,ecx
+    pop ebp
     ret
