@@ -13,6 +13,8 @@ VMName="OS"
 KERNELcpath='/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/OS/Kernel.c'
 Kernelentry_asm_path='/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/OS/Kernelentry.asm'
 Kernelentry_obj_path='/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/OS/Kernelentry.o'
+Cpuid_asm_path='/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/OS/Cpuid.asm'
+Cpuid_obj_path='/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/OS/Cpuid.obj'
 KERNELobjpath='/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/OS/Kernel.o'
 KERNELbinpath='/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/OS/Kernel.bin'
 
@@ -41,11 +43,12 @@ currentPath=$(pwd)
 cd "$ASMpath"
 nasm -f bin "$ASMname" -o "$BINpath"
 nasm -f elf "$Kernelentry_asm_path" -o "$Kernelentry_obj_path"
+nasm -f elf "$Cpuid_asm_path" -o "$Cpuid_obj_path"
 cd "$currentPath"
 
 
 gcc --no-pie -m32 -ffreestanding -c "$KERNELcpath" -o "$KERNELobjpath"
-ld -m elf_i386 -o "$KERNELbinpath" -Ttext 0x1000 "$Kernelentry_obj_path" "$KERNELobjpath" --oformat binary
+ld -m elf_i386 -o "$KERNELbinpath" -Ttext 0x1000 "$Kernelentry_obj_path" "$Cpuid_obj_path" "$KERNELobjpath" --oformat binary
 #combine asm with c
 #skip(seek)1 * bytes(bs)512  -----> skip bootsector
 dd if="$KERNELbinpath" of="$BINpath" conv=notrunc oflag=append bs=512 seek=1

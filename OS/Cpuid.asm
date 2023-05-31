@@ -1,3 +1,4 @@
+[global Cpuid_check]
 [bits 32]
 Cpuid_check:
     pushfd

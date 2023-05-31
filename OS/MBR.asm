@@ -23,7 +23,6 @@ call switch_to_32bit
 %include "Switch_to_32bit.asm"
 %include "DisplayString.asm"
 %include "A20_line.asm"
-%include "Cpuid.asm"
 [bits 16]
 load_kernel:
 	mov bx, KERNEL_OFFSET		; location where to load the read Data into

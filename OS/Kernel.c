@@ -1,8 +1,14 @@
-//shit, I need to learn C syntax
+extern int Cpuid_check(void);
 struct Video_Mem    {
     char* code;
     char* color;
 };
+unsigned int print(char* string, unsigned int last_position)    {
+    for (unsigned int position = last_position+1; *string !='0'; position +=2)   {
+        struct Video_Mem videoMem = {position,0};
+        *(videoMem.code) =
+    }
+}
 void main() {
     //char padding[80] = {"01234567890123456789012345678901234567890123456789012345678901234567890123456789"};
     unsigned int i = 3;
@@ -13,4 +19,5 @@ void main() {
         *videoMem[counter].code = 'X';
         foo += 2;
     }
+    Cpuid_check();
 }
