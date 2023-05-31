@@ -11,16 +11,32 @@ mov bp, 0x9000					; sets Basepointer to 0x9000 (far away from bootloader relate
 mov sp, bp						; Stack Pointer (TOS growth down wards)
 
 mov si, msg
-call load_kernel
 call DisplayString
+a20_state:
+    call check_a20
+    cmp ax, 1
+    jne is_false
+is_true:
+    mov si, true
+    call DisplayString
+    jmp continue
+is_false:
+    mov si, false
+    call DisplayString
+    call enable_a20
+    jmp a20_state
+    jmp continue
+continue:
+call load_kernel
 call switch_to_32bit
 
-jmp	$							; hang
+    jmp	$							; hang
 
 %include "Disk.asm"
 %include "Gdt.asm"
 %include "Switch_to_32bit.asm"
 %include "DisplayString.asm"
+%include "A20_line.asm"
 [bits 16]
 load_kernel:
 	mov bx, KERNEL_OFFSET		; location where to load the read Data into
@@ -36,6 +52,7 @@ BEGIN_32BIT:
 
 BOOT_DRIVE db 0					; Bootdrive variable (not a constant)
 msg db 'Hello Worldddddddddddddd!',10,13,'luuul',10,13,0
-
+true db 'TRUE',10,13,0
+false db 'FALSE',10,13,0
 times 510-($-$$) db 0
 dw 0AA55h

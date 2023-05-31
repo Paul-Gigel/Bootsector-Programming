@@ -1,3 +1,4 @@
+[bits 16]
 disk_load:
 	pusha					; push all general purpose register (ax, bx, cx, dx) onto stack
 	push dx					; additionaly store number of sectors to read (stored in dh)
