@@ -26,7 +26,7 @@ call switch_to_32bit
 [bits 16]
 load_kernel:
 	mov bx, KERNEL_OFFSET		; location where to load the read Data into
-	mov dh, 2					; number of Sectors to read
+	mov dh, 10					; number of Sectors to read
 	mov dl, [BOOT_DRIVE]		; Disk to read from
 	call disk_load				
 	ret							; return to caller

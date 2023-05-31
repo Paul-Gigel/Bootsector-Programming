@@ -4,20 +4,20 @@ struct Video_Mem    {
     char* color;
 };
 unsigned int print(char* string, unsigned int last_position)    {
-    for (unsigned int position = last_position+1; *string !='0'; position +=2)   {
-        struct Video_Mem videoMem = {position,0};
-        *(videoMem.code) =
+    struct Video_Mem videoMem;
+    for (unsigned int position = last_position; *string !=0; position +=2)   {
+        videoMem.code = (char*)position;
+        *(videoMem.code) = *string;
+        string++;
     }
 }
 void main() {
-    //char padding[80] = {"01234567890123456789012345678901234567890123456789012345678901234567890123456789"};
-    unsigned int i = 3;
-    unsigned int foo = 0x0;
-    struct Video_Mem videoMem[i];
-    for (unsigned int counter = 0; counter < i; counter++)   {
-        videoMem[counter].code = (char*)(0xb8000 + foo);
-        *videoMem[counter].code = 'X';
-        foo += 2;
-    }
-    Cpuid_check();
+    char CPU_ID_SUPORTED[] = "CPU_ID SUPORTED";
+    char CPU_ID_NOT_SUPORTED[] = "CPU_ID NOT SUPORTED";
+    if(Cpuid_check() == 1)    {
+        print(CPU_ID_SUPORTED,0xb8000);
+    };
+    if(Cpuid_check() == 0)    {
+        print(CPU_ID_NOT_SUPORTED,0xb8000);
+    };
 }
