@@ -12,21 +12,7 @@ mov sp, bp						; Stack Pointer (TOS growth down wards)
 
 mov si, msg
 call DisplayString
-a20_state:
-    call check_a20
-    cmp ax, 1
-    jne is_false
-is_true:
-    mov si, true
-    call DisplayString
-    jmp continue
-is_false:
-    mov si, false
-    call DisplayString
-    call enable_a20
-    jmp a20_state
-    jmp continue
-continue:
+call enable_a20
 call load_kernel
 call switch_to_32bit
 
@@ -37,6 +23,7 @@ call switch_to_32bit
 %include "Switch_to_32bit.asm"
 %include "DisplayString.asm"
 %include "A20_line.asm"
+%include "Cpuid.asm"
 [bits 16]
 load_kernel:
 	mov bx, KERNEL_OFFSET		; location where to load the read Data into
