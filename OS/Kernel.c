@@ -14,6 +14,8 @@ unsigned int print(char* string, unsigned int last_position)    {
 void main() {
     char CPU_ID_SUPORTED[] = "CPU_ID SUPORTED";
     char CPU_ID_NOT_SUPORTED[] = "CPU_ID NOT SUPORTED";
+    char* lel = (char*)0xb8000;
+    *lel = (Cpuid_check()<<1)+'0';
     if(Cpuid_check() == 1)    {
         print(CPU_ID_SUPORTED,0xb8000);
     };
