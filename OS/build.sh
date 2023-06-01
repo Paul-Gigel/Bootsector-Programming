@@ -75,4 +75,5 @@ dd if=/dev/zero of="$BINpath" bs=1 seek="$FILESIZE" count="$FILEpadding"
 "$VBoxManage" storagectl "$VMName" --name 'my Storageconstroller' --add ide --controller PIIX4
 "$VBoxManage" storageattach "$VMName" --storagectl 'my Storageconstroller' --port 0 --device 0 --type hdd --medium "$VDpath"
 "$VBoxManage" startvm "$VMName"
-# clear
+
+is_running=$("$VBoxManage" list runningvms | grep "$VMName" | wc -l)
