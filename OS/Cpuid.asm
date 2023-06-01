@@ -1,16 +1,21 @@
 [global Cpuid_check]
 [bits 32]
 Cpuid_check:
-    push ebp
-    mov ebp, esp
+    pushfd                          ; copy flagregister to eax
+    pop eax
+
+    mov ecx, eax                    ; store current flagregistervalue in ecx
+
+    xor eax, 1 << 21                ; flip ID bit
+
+    push eax                        ; copy eax to flagregister and back
+    popfd
     pushfd
     pop eax
-    mov ecx, eax
-    xor eax, 1 << 21
-    push eax
+
+    push ecx                        ; restore old registerflag
     popfd
-    push ecx
-    popfd
-    xor eax,ecx
-    pop ebp
+
+    xor eax,ecx                     ; compare altered flagregister with original flagregister
+
     ret
