@@ -15,11 +15,10 @@ void main() {
     char CPU_ID_SUPORTED[] = "CPU_ID SUPORTED";
     char CPU_ID_NOT_SUPORTED[] = "CPU_ID NOT SUPORTED";
     char* lel = (char*)0xb8000;
-    *lel = (Cpuid_check()<<21)+'0';
     if(Cpuid_check() == 2097152)    {
-        print(CPU_ID_SUPORTED,0xb8002);
+        print(CPU_ID_SUPORTED,0xb8000);
     };
     if(Cpuid_check() == 0)    {
-        print(CPU_ID_NOT_SUPORTED,0xb8002);
+        print(CPU_ID_NOT_SUPORTED,0xb8000);
     };
 }

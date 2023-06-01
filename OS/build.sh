@@ -27,6 +27,14 @@ KERNELbinpath='/home/paul/CLionProjects/General_projekts_folder/Bootsector-Progr
 #VMName="Helloworld"
 
 # Remove the VDI and BIN files if they exist
+is_running=$("$VBoxManage" list runningvms | grep "$VMName" | wc -l)
+if [[ "$is_running" -eq 1 ]]; then
+  echo "is_running"
+  echo $(pwd)
+  "$VBoxManage" controlvm "$VMName" poweroff
+  service virtualbox --full-restart
+fi
+
 if [ -f "$VDpath" ]; then
     rm "$VDpath"
 fi
@@ -66,5 +74,5 @@ dd if=/dev/zero of="$BINpath" bs=1 seek="$FILESIZE" count="$FILEpadding"
 "$VBoxManage" modifyvm "$VMName" --chipset piix3 --memory 1024
 "$VBoxManage" storagectl "$VMName" --name 'my Storageconstroller' --add ide --controller PIIX4
 "$VBoxManage" storageattach "$VMName" --storagectl 'my Storageconstroller' --port 0 --device 0 --type hdd --medium "$VDpath"
-
+"$VBoxManage" startvm "$VMName"
 # clear
