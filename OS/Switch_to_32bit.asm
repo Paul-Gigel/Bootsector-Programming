@@ -6,7 +6,7 @@ switch_to_32bit:
 	or eax, 0x1						; enable protected mode
 	mov cr0, eax
 	jmp CODE_SEG:init_32bit			; far jump
-
+; no paging -> logical adress = physikal adress
 [bits 32]
 init_32bit:
 	mov ax, DATA_SEG				; update Segment registers
