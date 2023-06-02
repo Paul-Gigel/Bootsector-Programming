@@ -59,7 +59,7 @@ cd "$currentPath"
 
 
 gcc --no-pie -m32 -ffreestanding -c "$KERNELcpath" -o "$KERNELobjpath"
-ld -m elf_i386 -o "$KERNELbinpath" -Ttext 0x1000 "$Kernelentry_obj_path" "$Cpuid_obj_path" "$Paging_obj_path" "$KERNELobjpath" --oformat binary
+ld -m elf_i386 -o "$KERNELbinpath" -Ttext 0x0 "$Kernelentry_obj_path" "$Cpuid_obj_path" "$Paging_obj_path" "$KERNELobjpath" --oformat binary
 #combine asm with c
 #skip(seek)1 * bytes(bs)512  -----> skip bootsector
 dd if="$KERNELbinpath" of="$BINpath" conv=notrunc oflag=append bs=512 seek=1
