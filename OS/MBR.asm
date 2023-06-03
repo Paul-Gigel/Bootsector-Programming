@@ -14,7 +14,11 @@ mov si, msg
 call DisplayString
 call enable_a20
 call load_second_stage
-call switch_to_32bit
+; that (below) call along with array of
+; information struct {addr on disk, size on disk, addr in mem, size in mem after init, ptr to init}
+; null padding at end (indicating end of array
+; ... Will be put on second sector and loaded by current
+call switch_to_32bit ; Second_stage_sector
 
     jmp	$							; hang
 
