@@ -20,7 +20,7 @@ call switch_to_32bit
 
 %include "Disk.asm"
 %include "Gdt.asm"
-%include "Switch_to_32bit.asm"
+;%include "SECOND_STAGE_LOADER.asm"
 %include "DisplayString.asm"
 %include "A20_line.asm"
 [bits 16]
@@ -31,11 +31,6 @@ load_second_stage:
 	mov dl, [BOOT_DRIVE]		; Disk to read from
 	call disk_load				
 	ret							; return to caller
-
-[bits 32]                   ; will be part of second stage loader
-BEGIN_32BIT:
-	call SECOND_STAGE_OFFSET	; give Control to the Kernel
-	jmp $						; loop in case Kernel returns
 
 BOOT_DRIVE db 0					; Bootdrive variable (not a constant)
 msg db 'Hello Worldddddddddddddd!',10,13,'luuul',10,13,0

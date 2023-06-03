@@ -34,6 +34,6 @@ Long_mode_capable:
     jz .No_long_mode
     mov eax, 1
     ret
-.No_long_mode
+.No_long_mode:
     mov eax, 0
     ret

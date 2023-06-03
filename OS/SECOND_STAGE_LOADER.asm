@@ -1,3 +1,4 @@
+%include "GDTheader.asm"
 [bits 16]
 switch_to_32bit:
 	cli								; disable interupts
@@ -5,7 +6,8 @@ switch_to_32bit:
 	mov eax, cr0
 	or eax, 0x1						; enable protected mode
 	mov cr0, eax
-	jmp CODE_SEG:init_32bit			; far jump
+    jmp CODE_SEG:init_32bit			; far jump
+
 ; no paging -> logical adress = physikal adress
 [bits 32]
 init_32bit:
@@ -20,3 +22,8 @@ init_32bit:
 	mov esp, ebp
 
 	call BEGIN_32BIT				; move back to MBR.asm
+
+[bits 32]                   ; will be part of second stage loader
+BEGIN_32BIT:
+	call SECOND_STAGE_OFFSET	; give Control to the Kernel
+	jmp $						; loop in case Kernel returns
