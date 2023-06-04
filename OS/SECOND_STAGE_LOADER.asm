@@ -24,6 +24,7 @@ init_32bit:
 	call BEGIN_32BIT				; move back to MBR.asm
 
 [bits 32]                   ; will be part of second stage loader
+[extern main]
 BEGIN_32BIT:
-	call SECOND_STAGE_OFFSET	; give Control to the Kernel
-	jmp $						; loop in case Kernel returns
+    call main
+    jmp $

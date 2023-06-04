@@ -1,5 +1,5 @@
-#define BOOL int
-extern void disable_paging(void);
+/*#define BOOL int
+extern void disable_paging(void);*/
 extern int Cpuid_check(void);
 extern BOOL Long_mode_capable(void);
 struct Video_Mem    {
@@ -21,7 +21,7 @@ void main() {
     char LONG_MODE_CAPABLE[] = "LONG_MODE CAPABLE";
     char LONG_MODE_NOT_CAPABLE[] = "LONG_MODE NOT CAPABLE";
     int current_position = 0xb8000;
-    disable_paging();
+    //disable_paging();
     if(Cpuid_check() == 2097152)    {
         current_position = print(CPU_ID_SUPORTED,current_position);
     };
