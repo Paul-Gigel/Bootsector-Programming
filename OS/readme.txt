@@ -10,7 +10,7 @@ three stage bootloader
     -              -    -> contains array of (dst) address to load tables to, location (src) on disk, and size on disk
     ----------------
 
-    need a AHCI (SATA) and or NVME driver
+    need an AHCI (SATA) and or NVME driver
 
 (info)Sector
 ;call load_(n)_stage

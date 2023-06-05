@@ -16,3 +16,6 @@ struc Information
     size_in_mem     resw    1       ; size after init
     related_info    resw    1       ; index to init or stack Information from beginning of Information array
 endstruc
+struc InformationEnd
+    what            resb    1       ;
+endstruc

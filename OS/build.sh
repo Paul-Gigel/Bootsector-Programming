@@ -54,17 +54,17 @@ cd "$FIRST_STAGE_LOADER_asm_path"
 nasm -f bin "$FIRST_STAGE_LOADER_asm_name" -o "$FIRST_STAGE_LOADER_bin_path"
 nasm -f bin "$SECOND_SECTOR_ASM_PATH" -o "$SECOND_SECTOR_BIN_PATH"
 #nasm -f elf "$Kernelentry_asm_path" -o "$Kernelentry_obj_path"
-nasm -f elf "$Cpuid_asm_path" -o "$Cpuid_obj_path"
-nasm -f elf "$Paging_asm_path" -o "$Paging_obj_path"
-nasm -f bin "$GDT_asm_path" -o "$GDT_bin_path"
+#nasm -f elf "$Cpuid_asm_path" -o "$Cpuid_obj_path"
+#nasm -f elf "$Paging_asm_path" -o "$Paging_obj_path"
+#nasm -f bin "$GDT_asm_path" -o "$GDT_bin_path"
 nasm -f elf "$SECOND_STAGE_LOADER_asm_path" -o "$SECOND_STAGE_LOADER_obj_path"
 cd "$currentPath"
 
 
-gcc --no-pie -m32 -ffreestanding -c "$KERNELcpath" -o "$KERNELobjpath"
-ld -m elf_i386 -o "$KERNELbinpath" -Ttext 0x0 "$SECOND_STAGE_LOADER_obj_path" "$Cpuid_obj_path" "$KERNELobjpath" --oformat binary
+#gcc --no-pie -m32 -ffreestanding -c "$KERNELcpath" -o "$KERNELobjpath"
+#ld -m elf_i386 -o "$KERNELbinpath" -Ttext 0x0 "$SECOND_STAGE_LOADER_obj_path" "$Cpuid_obj_path" "$KERNELobjpath" --oformat binary
 
-dd if="$SECOND_SECTOR_BIN_PATH" of="$BINpath" conv=notrunc oflag=append bs=512 seek=1
+#dd if="$SECOND_SECTOR_BIN_PATH" of="$BINpath" conv=notrunc oflag=append bs=512 seek=1
 
 #combine asm with c
 #skip(seek)1 * bytes(bs)512  -----> skip bootsector

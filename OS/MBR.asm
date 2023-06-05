@@ -1,39 +1,32 @@
 global BOOT_DRIVE
-[bits 16]						; tells the compiler to generate 16 bit assambly
-[org 0x7c00]					; tells the compiler to calculate labels from [org ...]
-								; Where to load the Kernel to
-								; Bios sets bootdrive in dl
+[bits 16]
+[org 0x7c00]
+
 mov [BOOT_DRIVE], dl			; store dl register in Variable called BOOT_DRIVE with value of dl
-								; setup stack#
-								; Stack is needed for call and ret command
+
 mov bp, 0x9000					; sets Basepointer to 0x9000 (far away from bootloader related code)
-mov sp, bp						; Stack Pointer (TOS growth down wards)
+mov sp, bp
 
 mov si, msg
 call DisplayString
 call enable_a20
-;call load_second_stage
-; one info byte 0 = realmode, 1 = protectedmode, 2 = longmode
-; that (below) call along with array of
-; information struct {what, addr on disk, size on disk, addr in mem, size in mem after init, ptr to init}
-; null padding at end (indicating end of array
-; info struct can discribe
-;   associated loader(code)
-;   associated tables
-;   associated init for table
-;   associated stack for code
-; ... Will be put on second sector and loaded by current
-;call switch_to_32bit ; Second_stage_sector
+;call load_second_sector
+;load_third_sector
+jmp	$							; hang
 
-    jmp	$							; hang
+%define MODE(base) byte[base + 0]                            ; 0-8
+%define CALL(base) quad[base + 8]                            ; 8-74
+%define Information_what(base, index)             word[base+(index*96)+72]   ; 72-88
+%define Information_addr_on_disk(index)     word[base+(index*80)+ 88]   ; 88-104
+%define Information_size_on_disk(index)     word[base+(index*64)+ 104]  ; 104-120
+%define Information_addr_in_mem(index)      word[base+(index*48)+ 120]  ; 120-136
+%define Information_size_in_mem(index)      word[base+(index*32)+ 136]  ; 136-152
+%define Information_related_info(index)     word[base+(index*16)+ 152]  ; 152-168
 
 %include "Disk.asm"
-%include "Gdt.asm"
-;%include "SECOND_STAGE_LOADER.asm"
 %include "DisplayString.asm"
 %include "A20_line.asm"
-[bits 16]
-; load_next_stage_info
+
 load_second_sector:
     mov ax, 0x7c00
     add ax, 0x200
@@ -41,7 +34,7 @@ load_second_sector:
 	mov dh, 1					; number of Sectors to read
 	mov dl, [BOOT_DRIVE]		; Disk to read from
 	mov cl, 0x02			    ; start from sector 2
-	call disk_load				
+	call disk_load
 	ret							; return to caller
 
 load_third_sector:
@@ -54,10 +47,31 @@ load_third_sector:
 	call disk_load
 	ret							; return to caller
 
+parse_Information:
+    mov si, 0x7E00              ; 0x7c00 + 0x200
+    cmp MODE(si), 0
+    je realmode
+    ret
+realmode:
+    xor ax,ax
+    mov ax, Information_what(si, 1)
+    ret
 
-BOOT_DRIVE db 0					; Bootdrive variable (not a constant)
+load_table:
+    ret
+
+load_stack:
+    ret
+
+load_code:
+    ret
+
+load_init:
+    ret
+
+
+BOOT_DRIVE db 0
 msg db 'Hello Worldddddddddddddd!',10,13,'luuul',10,13,0
-true db 'TRUE',10,13,0
-false db 'FALSE',10,13,0
+
 times 510-($-$$) db 0
 dw 0AA55h
