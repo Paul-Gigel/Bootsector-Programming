@@ -1,5 +1,6 @@
 %include "GDTheader.asm"
 [bits 16]
+[extern gdt_descriptor]
 switch_to_32bit:
 	cli								; disable interupts
 	lgdt [gdt_descriptor]			; load gdt

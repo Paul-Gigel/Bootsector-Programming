@@ -1,5 +1,5 @@
-/*#define BOOL int
-extern void disable_paging(void);*/
+#define BOOL int
+/*extern void disable_paging(void);*/
 extern int Cpuid_check(void);
 extern BOOL Long_mode_capable(void);
 struct Video_Mem    {

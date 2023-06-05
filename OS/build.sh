@@ -26,33 +26,27 @@ SECOND_SECTOR_BIN_PATH='/home/paul/CLionProjects/General_projekts_folder/Bootsec
 GDT_asm_path='/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/OS/Gdt.asm'
 GDT_bin_path='/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/OS/Gdt.bin'
 
-#VBoxManage="/usr/bin/VBoxManage"
-#ASMpath="/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming"
-#ASMname="Helloworld.asm"
-#BINpath="/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/Helloworld.bin"
-#VDpath="/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/Helloworld.vdi"
-#VMFolderpath="/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming"
-#VMName="Helloworld"
 
 # Remove the VDI and BIN files if they exist
-is_running=$("$VBoxManage" list runningvms | grep "$VMName" | wc -l)
-if [[ "$is_running" -eq 1 ]]; then
-  echo "is_running"
-  echo $(pwd)
-  "$VBoxManage" controlvm "$VMName" poweroff
-  service virtualbox --full-restart
-fi
 
-if [ -f "$VDpath" ]; then
-    rm "$VDpath"
-fi
-if [ -f "$BINpath" ]; then
-    rm "$BINpath"
-fi
+#is_running=$("$VBoxManage" list runningvms | grep "$VMName" | wc -l)
+#if [[ "$is_running" -eq 1 ]]; then
+#  echo "is_running"
+#  echo $(pwd)
+#  "$VBoxManage" controlvm "$VMName" poweroff
+#  service virtualbox --full-restart
+#fi
+#
+#if [ -f "$VDpath" ]; then
+#    rm "$VDpath"
+#fi
+#if [ -f "$BINpath" ]; then
+#    rm "$BINpath"
+#fi
 # Remove the VM if it exists
-if [ -d "$VMFolderpath/$VMName" ]; then
-    "$VBoxManage" unregistervm "$VMName" --delete
-fi
+#if [ -d "$VMFolderpath/$VMName" ]; then
+#    "$VBoxManage" unregistervm "$VMName" --delete
+#fi
 
 
 currentPath=$(pwd)
@@ -68,27 +62,27 @@ cd "$currentPath"
 
 
 gcc --no-pie -m32 -ffreestanding -c "$KERNELcpath" -o "$KERNELobjpath"
-ld -m elf_i386 -o "$KERNELbinpath" -Ttext 0x0 "$SECOND_STAGE_LOADER_obj_path" "$KERNELobjpath" --oformat binary
+ld -m elf_i386 -o "$KERNELbinpath" -Ttext 0x0 "$SECOND_STAGE_LOADER_obj_path" "$Cpuid_obj_path" "$KERNELobjpath" --oformat binary
 
 dd if="$SECOND_SECTOR_BIN_PATH" of="$BINpath" conv=notrunc oflag=append bs=512 seek=1
 
 #combine asm with c
 #skip(seek)1 * bytes(bs)512  -----> skip bootsector
-dd if="$KERNELbinpath" of="$BINpath" conv=notrunc oflag=append bs=512 seek=1
+#dd if="$KERNELbinpath" of="$BINpath" conv=notrunc oflag=append bs=512 seek=1
 #align to 512 bit boundery
-FILESIZE=$(stat -c%s "$BINpath")
-FILEpadding=$((512-(FILESIZE % 512)))
-dd if=/dev/zero of="$BINpath" bs=1 seek="$FILESIZE" count="$FILEpadding"
+#FILESIZE=$(stat -c%s "$BINpath")
+#FILEpadding=$((512-(FILESIZE % 512)))
+#dd if=/dev/zero of="$BINpath" bs=1 seek="$FILESIZE" count="$FILEpadding"
 #make one 1mib
-FILESIZE=$(stat -c%s "$BINpath")
-FILEpadding=$((1048576-(FILESIZE)))
-dd if=/dev/zero of="$BINpath" bs=1 seek="$FILESIZE" count="$FILEpadding"
+#FILESIZE=$(stat -c%s "$BINpath")
+#FILEpadding=$((1048576-(FILESIZE)))
+#dd if=/dev/zero of="$BINpath" bs=1 seek="$FILESIZE" count="$FILEpadding"
 
-"$VBoxManage" convertfromraw "$BINpath" "$VDpath" --format VDI
-"$VBoxManage" createvm --name "$VMName" --basefolder "$VMFolderpath" --register
-"$VBoxManage" modifyvm "$VMName" --chipset piix3 --memory 1024
-"$VBoxManage" storagectl "$VMName" --name 'my Storageconstroller' --add ide --controller PIIX4
-"$VBoxManage" storageattach "$VMName" --storagectl 'my Storageconstroller' --port 0 --device 0 --type hdd --medium "$VDpath"
-"$VBoxManage" startvm "$VMName"
+#"$VBoxManage" convertfromraw "$BINpath" "$VDpath" --format VDI
+#"$VBoxManage" createvm --name "$VMName" --basefolder "$VMFolderpath" --register
+#"$VBoxManage" modifyvm "$VMName" --chipset piix3 --memory 1024
+#"$VBoxManage" storagectl "$VMName" --name 'my Storageconstroller' --add ide --controller PIIX4
+#"$VBoxManage" storageattach "$VMName" --storagectl 'my Storageconstroller' --port 0 --device 0 --type hdd --medium "$VDpath"
+#"$VBoxManage" startvm "$VMName"
 
-is_running=$("$VBoxManage" list runningvms | grep "$VMName" | wc -l)
+#is_running=$("$VBoxManage" list runningvms | grep "$VMName" | wc -l)

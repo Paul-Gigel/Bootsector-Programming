@@ -14,5 +14,5 @@ struc Information
     size_on_disk    resw    1       ; size (req) 0 if
     addr_in_mem     resw    1       ; destination
     size_in_mem     resw    1       ; size after init
-    ptr             resw    1       ; ptr to init or stack
+    related_info    resw    1       ; index to init or stack Information from beginning of Information array
 endstruc

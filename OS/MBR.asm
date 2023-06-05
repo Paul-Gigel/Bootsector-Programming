@@ -2,8 +2,6 @@ global BOOT_DRIVE
 [bits 16]						; tells the compiler to generate 16 bit assambly
 [org 0x7c00]					; tells the compiler to calculate labels from [org ...]
 								; Where to load the Kernel to
-SECOND_STAGE_OFFSET equ 0x0     ; define an assamblerconstant called KERNE...
-THIRD_STAGE_OFFSET equ 0x0      ;
 								; Bios sets bootdrive in dl
 mov [BOOT_DRIVE], dl			; store dl register in Variable called BOOT_DRIVE with value of dl
 								; setup stack#
@@ -14,7 +12,7 @@ mov sp, bp						; Stack Pointer (TOS growth down wards)
 mov si, msg
 call DisplayString
 call enable_a20
-call load_second_stage
+;call load_second_stage
 ; one info byte 0 = realmode, 1 = protectedmode, 2 = longmode
 ; that (below) call along with array of
 ; information struct {what, addr on disk, size on disk, addr in mem, size in mem after init, ptr to init}
@@ -25,7 +23,7 @@ call load_second_stage
 ;   associated init for table
 ;   associated stack for code
 ; ... Will be put on second sector and loaded by current
-call switch_to_32bit ; Second_stage_sector
+;call switch_to_32bit ; Second_stage_sector
 
     jmp	$							; hang
 
