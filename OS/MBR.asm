@@ -14,14 +14,16 @@ call enable_a20
 ;load_third_sector
 jmp	$							; hang
 
-%define MODE(base) byte[base + 0]                            ; 0-8
-%define CALL(base) quad[base + 8]                            ; 8-74
-%define Information_what(base, index)             word[base+(index*96)+72]   ; 72-88
-%define Information_addr_on_disk(index)     word[base+(index*80)+ 88]   ; 88-104
-%define Information_size_on_disk(index)     word[base+(index*64)+ 104]  ; 104-120
-%define Information_addr_in_mem(index)      word[base+(index*48)+ 120]  ; 120-136
-%define Information_size_in_mem(index)      word[base+(index*32)+ 136]  ; 136-152
-%define Information_related_info(index)     word[base+(index*16)+ 152]  ; 152-168
+%define MODE                        0           ; 0-8
+%define CALL                        8           ; 8-72
+%define Information__begin          72          ; first element
+%define Information__end            168         ; last element
+%define Information_what            72          ; 72-88
+%define Information_addr_on_disk    88          ; 88-104
+%define Information_size_on_disk    104         ; 104-120
+%define Information_addr_in_mem     120         ; 120-136
+%define Information_size_in_mem     136         ; 136-152
+%define Information_related_info    152         ; 152-168
 
 %include "Disk.asm"
 %include "DisplayString.asm"
@@ -48,13 +50,15 @@ load_third_sector:
 	ret							; return to caller
 
 parse_Information:
-    mov si, 0x7E00              ; 0x7c00 + 0x200
-    cmp MODE(si), 0
+    mov bx, 0x7E00              ; 0x7c00 + 0x200
+    mov si, 0
+
     je realmode
     ret
 realmode:
-    xor ax,ax
-    mov ax, Information_what(si, 1)
+    mov ax, word[bx+si+72]
+    cmp ax, 11111111b
+    jne realmode
     ret
 
 load_table:
@@ -72,6 +76,5 @@ load_init:
 
 BOOT_DRIVE db 0
 msg db 'Hello Worldddddddddddddd!',10,13,'luuul',10,13,0
-
 times 510-($-$$) db 0
 dw 0AA55h
