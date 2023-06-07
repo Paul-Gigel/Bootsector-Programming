@@ -10,7 +10,8 @@ mov sp, bp
 mov si, msg
 call DisplayString
 call enable_a20
-;call load_second_sector
+call load_second_sector
+call parse_Information
 ;load_third_sector
 jmp	$							; hang
 
@@ -56,7 +57,16 @@ parse_Information:
     je realmode
     ret
 realmode:
-    mov ax, word[bx+si+72]
+; word[bx+si*(Information__end-Information_what)+Information_what]
+    mov ax, si
+    mov dx, Information__end
+    sub dx, Information_what
+    mul dx
+    mov ax, word[bx+si+Information_what]
+    push si
+    mov si, 0x7E00;+I_what
+    call DisplayString
+    pop si
     cmp ax, 11111111b
     jne realmode
     ret
@@ -75,6 +85,8 @@ load_init:
 
 
 BOOT_DRIVE db 0
+I_what dw 0
 msg db 'Hello Worldddddddddddddd!',10,13,'luuul',10,13,0
+msg2 db 'Penis!',10,13,0
 times 510-($-$$) db 0
 dw 0AA55h
