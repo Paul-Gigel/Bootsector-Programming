@@ -43,7 +43,7 @@ fi
 if [ -f "$BINpath" ]; then
     rm "$BINpath"
 fi
- Remove the VM if it exists
+#Remove the VM if it exists
 if [ -d "$VMFolderpath/$VMName" ]; then
     "$VBoxManage" unregistervm "$VMName" --delete
 fi

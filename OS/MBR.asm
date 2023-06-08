@@ -59,16 +59,17 @@ parse_Information:
 realmode:
 ; word[bx+si*(Information__end-Information_what)+Information_what]
     mov ax, si
-    mov dx, Information__end
-    sub dx, Information_what
+    mov dx, Information__end            ; 168
+    sub dx, Information_what            ; 72
     mul dx
+    mov si, 96;ax
+
     mov ax, word[bx+si+Information_what]
-    push si
-    mov si, 0x7E00;+I_what
-    call DisplayString
-    pop si
     cmp ax, 11111111b
+    jmp $
     jne realmode
+    mov si, msg2
+    call DisplayString
     ret
 
 load_table:
