@@ -66,8 +66,8 @@ realmode:
 
     mov ax, word[bx+si+Information_what]
     cmp ax, 11111111b
-    jmp $
     jne realmode
+    jmp $
     mov si, msg2
     call DisplayString
     ret

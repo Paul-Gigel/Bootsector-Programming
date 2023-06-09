@@ -79,10 +79,13 @@ FILESIZE=$(stat -c%s "$BINpath")
 FILEpadding=$((1048576-(FILESIZE)))
 dd if=/dev/zero of="$BINpath" bs=1 seek="$FILESIZE" count="$FILEpadding"
 "$VBoxManage" convertfromraw "$BINpath" "$VDpath" --format VDI
-"$VBoxManage" createvm --name "$VMName" --basefolder "$VMFolderpath" --register
-"$VBoxManage" modifyvm "$VMName" --chipset piix3 --memory 1024
-"$VBoxManage" storagectl "$VMName" --name 'my Storageconstroller' --add ide --controller PIIX4
-"$VBoxManage" storageattach "$VMName" --storagectl 'my Storageconstroller' --port 0 --device 0 --type hdd --medium "$VDpath"
-"$VBoxManage" startvm "$VMName"
+#in qemu
+virt-install --name=OS --os-variant=unknown --import --ram=2  --disk=/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/OS/MBR.vdi
+#in Virtual box
+#"$VBoxManage" createvm --name "$VMName" --basefolder "$VMFolderpath" --register
+#"$VBoxManage" modifyvm "$VMName" --chipset piix3 --memory 1024
+#"$VBoxManage" storagectl "$VMName" --name 'my Storageconstroller' --add ide --controller PIIX4
+#"$VBoxManage" storageattach "$VMName" --storagectl 'my Storageconstroller' --port 0 --device 0 --type hdd --medium "$VDpath"
+#"$VBoxManage" startvm "$VMName"
 
 #is_running=$("$VBoxManage" list runningvms | grep "$VMName" | wc -l)
