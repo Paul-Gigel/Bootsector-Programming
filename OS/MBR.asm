@@ -64,10 +64,10 @@ realmode:
     mul dx
     mov si, 96;ax
 
-    mov ax, word[bx+si+Information_what]
+    mov ax, byte[0x7e00];bx+si+Information_what]
+    jmp $
     cmp ax, 11111111b
     jne realmode
-    jmp $
     mov si, msg2
     call DisplayString
     ret

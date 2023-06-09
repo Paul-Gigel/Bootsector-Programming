@@ -80,7 +80,7 @@ FILEpadding=$((1048576-(FILESIZE)))
 dd if=/dev/zero of="$BINpath" bs=1 seek="$FILESIZE" count="$FILEpadding"
 "$VBoxManage" convertfromraw "$BINpath" "$VDpath" --format VDI
 #in qemu
-virt-install --name=OS --os-variant=unknown --import --ram=2  --disk=/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/OS/MBR.vdi
+/usr/bin/qemu-system-x86_64 -monitor stdio -cpu SandyBridge -machine accel=kvm -m 2 -hda "$VDpath" -boot order=adc,menu=on -net none -rtc base=localtime -name "OS"
 #in Virtual box
 #"$VBoxManage" createvm --name "$VMName" --basefolder "$VMFolderpath" --register
 #"$VBoxManage" modifyvm "$VMName" --chipset piix3 --memory 1024
