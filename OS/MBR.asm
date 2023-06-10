@@ -15,16 +15,16 @@ call parse_Information
 ;load_third_sector
 jmp	$							; hang
 
-%define MODE                        0           ; 0-8
-%define CALL                        8           ; 8-72
-%define Information__begin          72          ; first element
-%define Information__end            168         ; last element
-%define Information_what            72          ; 72-88
-%define Information_addr_on_disk    88          ; 88-104
-%define Information_size_on_disk    104         ; 104-120
-%define Information_addr_in_mem     120         ; 120-136
-%define Information_size_in_mem     136         ; 136-152
-%define Information_related_info    152         ; 152-168
+%define MODE                        0;0           ; 0-8
+%define CALL                        1;8           ; 8-72
+%define Information__begin          9;72          ; first element
+%define Information__end            21;168         ; last element
+%define Information_what            9;72          ; 72-88
+%define Information_addr_on_disk    11;88          ; 88-104
+%define Information_size_on_disk    13;104         ; 104-120
+%define Information_addr_in_mem     15;120         ; 120-136
+%define Information_size_in_mem     17;136         ; 136-152
+%define Information_related_info    19;152         ; 152-168
 
 %include "Disk.asm"
 %include "DisplayString.asm"
@@ -46,7 +46,7 @@ load_third_sector:
 	mov bx, ax                  ; location where to load the read Data into
 	mov dh, 1					; number of Sectors to read
 	mov dl, [BOOT_DRIVE]		; Disk to read from
-	mov cl, 0x03			    ; start from sector 2
+	mov cl, 0x03			    ; start from sector 3
 	call disk_load
 	ret							; return to caller
 
@@ -62,9 +62,11 @@ realmode:
     mov dx, Information__end            ; 168
     sub dx, Information_what            ; 72
     mul dx
-    mov si, 96;ax
+    mov si, ax
 
-    mov ax, byte[0x7e00];bx+si+Information_what]
+    mov ax, word[bx+si+Information_what]
+    ;mov al, byte[bx+1]
+
     jmp $
     cmp ax, 11111111b
     jne realmode
