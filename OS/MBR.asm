@@ -53,10 +53,9 @@ load_third_sector:
 parse_Information:
     mov bx, 0x7E00              ; 0x7c00 + 0x200
     mov si, 0
-
-    jmp realmode
-    ret
-realmode:
+    jmp realmode_loop
+realmode_loop:
+    push bx
     push si
 
     mov ax, si
@@ -68,10 +67,11 @@ realmode:
     mov ax, word[bx+si+Information_what]
 
     pop si
+    pop bx
     inc si
 
     cmp ax, 11111111b
-    jne realmode
+    jne realmode_loop
     mov si, msg2
     call DisplayString
     ret

@@ -1,5 +1,7 @@
 [bits 16]
 %include "Information_struct_Header.asm"
+test_export equ 13
+[global test_export]
 type db 0xff                   ; realmode (managed by first_level_loader)
 ;[extern switch_to_32bit]
 align 8;64
