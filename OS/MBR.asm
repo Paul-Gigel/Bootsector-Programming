@@ -52,19 +52,23 @@ load_third_sector:
 
 parse_Information:
     mov bx, 0x7E00              ; 0x7c00 + 0x200
-    mov si, 3;0
+    mov si, 0
 
-    je realmode
+    jmp realmode
     ret
 realmode:
-; word[bx+si*(Information__end-Information_what)+Information_what]
+    push si
+
     mov ax, si
-    mov dx, Information__end            ;21
-    sub dx, Information_what            ;9
+    mov dx, Information__end            ;23
+    sub dx, Information_what            ;11
     mul dx
     mov si, ax
 
     mov ax, word[bx+si+Information_what]
+
+    pop si
+    inc si
 
     cmp ax, 11111111b
     jne realmode
