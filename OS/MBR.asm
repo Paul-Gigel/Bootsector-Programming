@@ -15,16 +15,16 @@ call parse_Information
 ;load_third_sector
 jmp	$							; hang
 
-%define MODE                        0;0           ; 0-8
-%define CALL                        1;8           ; 8-72
-%define Information__begin          9;72          ; first element
-%define Information__end            21;168         ; last element
-%define Information_what            9;72          ; 72-88
-%define Information_addr_on_disk    11;88          ; 88-104
-%define Information_size_on_disk    13;104         ; 104-120
-%define Information_addr_in_mem     15;120         ; 120-136
-%define Information_size_in_mem     17;136         ; 136-152
-%define Information_related_info    19;152         ; 152-168
+%define MODE                        0               ; 0-1
+%define CALL                        1               ; 1-9
+%define Information__begin          11;9               ; 9
+%define Information__end            23;21              ; 21
+%define Information_what            11;9               ; 9-11
+%define Information_addr_on_disk    13;11              ; 11-13
+%define Information_size_on_disk    15;13              ; 13-15
+%define Information_addr_in_mem     17;15              ; 15-17
+%define Information_size_in_mem     19;17              ; 17-19
+%define Information_related_info    21;19              ; 19-21
 
 %include "Disk.asm"
 %include "DisplayString.asm"
@@ -52,22 +52,20 @@ load_third_sector:
 
 parse_Information:
     mov bx, 0x7E00              ; 0x7c00 + 0x200
-    mov si, 0
+    mov si, 3;0
 
     je realmode
     ret
 realmode:
 ; word[bx+si*(Information__end-Information_what)+Information_what]
     mov ax, si
-    mov dx, Information__end            ; 168
-    sub dx, Information_what            ; 72
+    mov dx, Information__end            ;21
+    sub dx, Information_what            ;9
     mul dx
     mov si, ax
 
     mov ax, word[bx+si+Information_what]
-    ;mov al, byte[bx+1]
 
-    jmp $
     cmp ax, 11111111b
     jne realmode
     mov si, msg2

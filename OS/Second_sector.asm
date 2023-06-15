@@ -1,5 +1,6 @@
+[bits 16]
 %include "Information_struct_Header.asm"
-type db 0                   ; realmode (managed by first_level_loader)
+type db 0xff                   ; realmode (managed by first_level_loader)
 ;[extern switch_to_32bit]
 align 8;64
 call switch_to_32bit        ; need to write a linkerscripte for that to work

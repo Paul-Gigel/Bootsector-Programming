@@ -81,6 +81,9 @@ dd if=/dev/zero of="$BINpath" bs=1 seek="$FILESIZE" count="$FILEpadding"
 "$VBoxManage" convertfromraw "$BINpath" "$VDpath" --format VDI
 #in qemu
 /usr/bin/qemu-system-x86_64 -monitor stdio -cpu SandyBridge -machine accel=kvm -m 2 -hda "$VDpath" -boot order=adc,menu=on -net none -rtc base=localtime -name "OS"
+#dump-guest-memory  /home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/OS/memory_dump.txt
+#xp /h 0x7c00+0x200-2 #to get the last magic value
+#xp /b 0x7c00+0x200+9
 #in Virtual box
 #"$VBoxManage" createvm --name "$VMName" --basefolder "$VMFolderpath" --register
 #"$VBoxManage" modifyvm "$VMName" --chipset piix3 --memory 1024

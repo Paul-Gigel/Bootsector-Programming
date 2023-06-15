@@ -17,5 +17,5 @@ struc Information
     related_info    resw    1       ; index to init or stack Information from beginning of Information array
 endstruc
 struc InformationEnd
-    what            resb    1       ;
+    what            resw    1       ;
 endstruc
