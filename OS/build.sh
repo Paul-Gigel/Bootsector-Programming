@@ -22,6 +22,7 @@ KERNELbinpath='/home/paul/CLionProjects/General_projekts_folder/Bootsector-Progr
 SECOND_STAGE_LOADER_asm_path='/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/OS/SECOND_STAGE_LOADER.asm'
 SECOND_STAGE_LOADER_obj_path='/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/OS/SECOND_STAGE_LOADER.o'
 SECOND_SECTOR_ASM_PATH='/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/OS/Second_sector.asm'
+SECOND_SECTOR_OBJ_PATH='/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/OS/Second_sector.o'
 SECOND_SECTOR_BIN_PATH='/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/OS/Second_sector.bin'
 GDT_asm_path='/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/OS/Gdt.asm'
 GDT_bin_path='/home/paul/CLionProjects/General_projekts_folder/Bootsector-Programming/OS/Gdt.bin'
@@ -52,7 +53,7 @@ fi
 currentPath=$(pwd)
 cd "$FIRST_STAGE_LOADER_asm_path"
 nasm -f bin "$FIRST_STAGE_LOADER_asm_name" -o "$FIRST_STAGE_LOADER_bin_path"
-nasm -f bin "$SECOND_SECTOR_ASM_PATH" -o "$SECOND_SECTOR_BIN_PATH"
+nasm -f elf "$SECOND_SECTOR_ASM_PATH" -o "$SECOND_SECTOR_OBJ_PATH"
 #nasm -f elf "$Kernelentry_asm_path" -o "$Kernelentry_obj_path"
 #nasm -f elf "$Cpuid_asm_path" -o "$Cpuid_obj_path"
 #nasm -f elf "$Paging_asm_path" -o "$Paging_obj_path"
@@ -64,7 +65,7 @@ cd "$currentPath"
 
 #gcc --no-pie -m32 -ffreestanding -c "$KERNELcpath" -o "$KERNELobjpath"
 #ld -m elf_i386 -o "$KERNELbinpath" -Ttext 0x0 "$SECOND_STAGE_LOADER_obj_path" "$Cpuid_obj_path" "$KERNELobjpath" --oformat binary
-
+ld -m elf_i386 -o "$SECOND_SECTOR_OBJ_PATH" -Ttext 0x0 "$SECOND_SECTOR_BIN_PATH" --oformat binary
 dd if="$SECOND_SECTOR_BIN_PATH" of="$FIRST_STAGE_LOADER_bin_path" conv=notrunc oflag=append bs=512 seek=1
 BINpath="$FIRST_STAGE_LOADER_bin_path"
 #combine asm with c
